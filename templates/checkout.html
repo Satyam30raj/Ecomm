@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f8f9fa; padding: 20px;">
+
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="static/images/paypal-card.png" alt="Site Banner" style="max-width: 25%; height: auto; border-radius: 8px;">
+    </div>
+
+    <div style="max-width: 600px; margin: auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <h2 style="text-align: center; color: #007bff;">Checkout</h2>
+
+        <p style="text-align: center; color: #555;">Thank you for choosing our store! We offer a wide variety of products to meet your needs. Complete your order below!</p>
+
+        <form action="{{ url_for('checkout') }}" method="post">
+            <div style="margin-bottom: 15px;">
+                <label for="name" style="display: block; margin-bottom: 5px;">Full Name</label>
+                <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="email" style="display: block; margin-bottom: 5px;">Email Address</label>
+                <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="address" style="display: block; margin-bottom: 5px;">Shipping Address</label>
+                <textarea id="address" name="address" required rows="4" style="width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="card_number" style="display: block; margin-bottom: 5px;">Card Number</label>
+                <input type="text" id="card_number" name="card_number" required style="width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="expiry_date" style="display: block; margin-bottom: 5px;">Expiry Date (MM/YY)</label>
+                <input type="text" id="expiry_date" name="expiry_date" required placeholder="MM/YY" style="width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="cvv" style="display: block; margin-bottom: 5px;">CVV</label>
+                <input type="text" id="cvv" name="cvv" required style="width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px;">
+            </div>
+
+            <h4 style="color: #007bff;">Your Cart</h4>
+            <ul style="list-style: none; padding: 0;">
+                {% for item in cart_items %}
+                <li style="padding: 10px; border-bottom: 1px solid #dee2e6;">
+                    <strong>{{ item.product_name }}</strong>
+                    <span style="float: right;">${{ item.price }}</span>
+                </li>
+                {% endfor %}
+                <li style="padding: 10px; border-top: 1px solid #dee2e6;">
+                    <strong>Total:</strong>
+                    <span style="float: right;">${{ total_price }}</span>
+                </li>
+            </ul>
+
+            <button type="submit" style="width: 100%; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Place Order</button>
+        </form>
+    </div>
+
+</body>
+</html>

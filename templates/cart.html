@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Add to Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Our Products</h1>
+
+        <div class="row">
+            <!-- Loop through products and display each in a card -->
+            {% for id, product in products.items() %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">$ {{ product.price }}</p>
+                        <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ id }}">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Cart Section -->
+        <div class="cart-section mt-5">
+            <h2>Your Cart</h2>
+            <ul id="cart-items" class="list-group">
+                <!-- Cart items will be dynamically updated here -->
+                {% for item in cart %}
+                <li class="list-group-item">{{ item.name }} - ${{ item.price }}</li>
+                {% endfor %}
+            </ul>
+            <div class="mt-4">
+                <button id="checkout-btn" class="btn btn-success">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Event listener for Add to Cart button
+            $('.add-to-cart-btn').click(function () {
+                var productId = $(this).data('product-id');
+
+                // Ajax request to add the product to the cart
+                $.ajax({
+                    url: "{{ url_for('add_to_cart') }}", // Flask route to add to cart
+                    type: "POST",
+                    data: { product_id: productId },
+                    success: function (response) {
+                        // Update cart section dynamically
+                        $('#cart-items').html('');
+                        response.cart.forEach(function (item) {
+                            $('#cart-items').append('<li class="list-group-item">' + item.name + ' - $' + item.price + '</li>');
+                        });
+                    },
+                    error: function () {
+                        alert('Error adding item to cart.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
