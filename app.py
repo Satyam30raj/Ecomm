@@ -61,6 +61,3 @@ def clear_cart():
     flash('Your cart has been cleared.', 'success')  # Show success message
     return redirect(url_for('view_cart'))  # Redirect back to the cart view
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
