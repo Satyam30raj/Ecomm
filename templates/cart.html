@@ -20,7 +20,7 @@
                     <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">$ {{ product.price }}</p>
+                        <p class="card-text">₹ {{ product.price }}</p>
                         <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ id }}">Add to Cart</button>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
             <ul id="cart-items" class="list-group">
                 <!-- Cart items will be dynamically updated here -->
                 {% for item in cart %}
-                <li class="list-group-item">{{ item.name }} - ${{ item.price }}</li>
+                <li class="list-group-item">{{ item.name }} - ₹{{ item.price }}</li>
                 {% endfor %}
             </ul>
             <div class="mt-4">
